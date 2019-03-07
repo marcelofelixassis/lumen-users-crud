@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\User as UserModel;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
     /**
-     *  @var UserModel $userModel
+     *  @var UserService $userService
      */
-    private $userModel;
+    private $userService;
 
     /**
      * Create a new controller instance.
@@ -19,10 +18,10 @@ class UserController extends Controller
      * @return void
      */
     public function __construct(
-        UserModel $userModel
+        UserService $userService
     )
     {
-        $this->userModel = $userModel;
+        $this->userService = $userService;
     }
 
     /**
@@ -30,8 +29,7 @@ class UserController extends Controller
      */
     public function getAll()
     {
-        $users = $this->userModel->all();
-        return response()->json(['response' => $users], Response::HTTP_OK);
+       return $this->userService->getAll();
     }
 
     /**
@@ -39,10 +37,7 @@ class UserController extends Controller
      */
     public function getOne($id)
     {
-        $user = $this->userModel->find($id);
-        if(!$user)
-            return response()->json(['response' => null], Response::HTTP_OK);
-        return response()->json(['response' => $user], Response::HTTP_OK);
+        return $this->userService->getOne($id);
     }
 
     /**
@@ -50,8 +45,7 @@ class UserController extends Controller
      */
     public function new(Request $request)
     {
-        $user = $this->userModel->create($request->all());
-        return response()->json(['response' => $user], Response::HTTP_CREATED);
+        return $this->userService->new($request);
     }
 
     /**
@@ -59,11 +53,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->userModel->find($id);
-        if(!$user)
-            return response()->json(['response' => null], Response::HTTP_OK); 
-        $user->update($request->all());
-        return response()->json(['response' => $user], Response::HTTP_OK);
+        return $this->userService->update($request, $id);
     }
 
     /**
@@ -71,11 +61,6 @@ class UserController extends Controller
      */
     public function delete($id)
     {
-        $user = $this->userModel->find($id);
-        if(!$user)
-            return response()->json(['response' => null], Response::HTTP_OK);
-        $user->delete();
-        return response()->json(['response' => true], Response::HTTP_OK);
-
+        return $this->userService->delete($id);
     }
 }
