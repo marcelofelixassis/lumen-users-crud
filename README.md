@@ -19,3 +19,36 @@ If you discover a security vulnerability within Lumen, please send an e-mail to 
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Usage
+
+
+```sh
+$ composer install
+```
+Create a database according to the .env file information.
+```sh
+$ php artisan migrate
+$ php -S 127.0.0.1:port -t public
+```
+
+
+## Routes
+##### Method GET - all users
+http://127.0.0.1:3000/api/users
+
+##### Method GET - find user by id
+http://127.0.0.1:3000/api/user/{id}
+
+##### Method POST - create new user (application/json)
+Exemple: {"name":"Marcelo", "age":22, "email":"marcelofelix.af@gmail.com", "job":"developer"}
+http://127.0.0.1:3000/api/user
+
+##### Method PUT - edit user (application/json)
+Exemple: {"email":"marcelo@yahoo.com", "name":"Marcelo", "age":22, "job":"developer"}
+http://127.0.0.1:3000/api/user/{id}
+
+##### Method DELETE - delete user
+http://127.0.0.1:3000/api/user/{id}
